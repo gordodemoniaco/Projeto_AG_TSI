@@ -136,6 +136,7 @@ public class Grafo {
             System.out.printf("Defina o vértice de Fim entre 0 e %d (Diferente do Início em %d): ", this.n, this.inicio);
             aux_v = entrada.nextInt();
         }while(((aux_v<0) || (aux_v>=this.n))&&(aux_v!=this.inicio));
+        this.fim = aux_v;
         entrada.close();
         System.out.println("Início: " + (this.inicio) + "| Fim: "+ (this.fim));
 
