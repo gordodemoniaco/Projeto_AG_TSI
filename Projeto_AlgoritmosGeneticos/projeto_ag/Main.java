@@ -1,7 +1,7 @@
 package projeto_ag;
 
-import java.util.Random;
 import java.util.Scanner;
+
 /**
  * Método Principal do Projeto de Algorítmos Genéticos
  * Projeto sobre Grafos não-dirigidos
@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        boolean aleatorio = false;
+        int aleatorio = 0;
         int n = 6;
         Grafo g;
         Scanner entrada = new Scanner (System.in);
@@ -29,14 +29,15 @@ public class Main {
             System.out.println("Escolha o numero de Vértices do grafo:");
             n = Integer.valueOf(entrada.nextInt());
             System.out.println("Digite '1' para Grafo Aleatório e '0' para montar o Grafo:");
-            aleatorio = entrada.nextBoolean();
+            aleatorio = entrada.nextInt();
+            
             g = new Grafo(n, aleatorio);
         }
         else{
             System.out.println("Opção '2 - Grafo Padrão' Escolhida");
             g = new Grafo();
         }
-
+        g.definepontas();
         System.out.println("O Grafo:");
         g.imprimegrafo();
         entrada.close();

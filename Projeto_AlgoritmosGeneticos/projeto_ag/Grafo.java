@@ -1,23 +1,37 @@
 package projeto_ag;
 
 import java.util.Scanner;
+import java.util.Random;
 
 public class Grafo {
     /**
      * Classe que representa um grafo. Contém métodos de preenchimento e um setup padrão
      * Se definidos parametros do contrutor, monta-se um grafo (aleatorio ou nao), se o contrutor usado for sem parâmetros, grafo default
      */
-    public final double infinito = 999999999.99;
+    public final double infinito = Double.POSITIVE_INFINITY;
     int n; // numero de nós do grafo
     double [][] dist; // matriz de adjascencia
     private int inicio; // vértice inicial
     private int fim; // vertice final
 
-    Grafo(int tamanho, boolean aleatorio){ //Grafo mutável (aleatorio = true, montável = false, tamanho = numero de vértices)
+    Grafo(int tamanho, int aleatorio){ //Grafo mutável (aleatorio = true, montável = false, tamanho = numero de vértices)
         this.n = tamanho;
         this.dist = new double[this.n][this.n];
-        
-        if(!aleatorio){ // Se a opçao for não aleatório
+        boolean aop = true;
+        switch(aleatorio){
+            case 0:
+                aop = false;
+            break;
+            case 1: 
+                aop = true;
+            break;
+            default:
+                aop = false;
+            break;
+        }
+            
+
+        if(!aop){ // Se a opçao for não aleatório
             System.out.println("Distância entre os Vértices. Se não houver arestas entre os vertices, a distancia digitada deverá ser 0 (será substituida por infinito).");
             Scanner entrada = new Scanner (System.in);
             for(int i=0; i<this.n; i++){
@@ -27,7 +41,7 @@ public class Grafo {
                         this.dist[i][j] = num;
                     }
                     else{
-                        System.out.println("Distância entre "+ i + " e "+ j +": ");
+                        System.out.println("Distância entre "+ (i+1) + " e "+ (j+1) +": ");
                         double num = entrada.nextDouble();
                         if (num == 0.0){
                             num = this.infinito; // se a distancia for deixada como zero pelo usuário, será considerada sem aresta (explicado)
@@ -41,13 +55,15 @@ public class Grafo {
         }
         else {
             for(int i=0; i<this.n; i++){
-                for(int j=0; j<this.n; j++){
+                for(int j=1; j<this.n; j++){
                     if(i!=j){
-                        double num = Math.round(Math.random()*10.0);
+                        Random r = new Random();
+                        double num = r.nextInt(100);
                         if (num == 0.0){
                             num = this.infinito;
                         }
                         this.dist[i][j] = num;
+                        this.dist[j][i] = num;
                     }
                     else if(i==j){
                         double num = 0.0;
@@ -110,12 +126,18 @@ public class Grafo {
     }
     public void definepontas(){
         Scanner entrada = new Scanner (System.in);
-        System.out.printf("Defina o vértice de Início entre 1 e %d: ", this.n);
-        this.inicio = entrada.nextInt();
-        System.out.printf("Defina o vértice de Início entre 1 e %d (Diferente de %d): ", this.n, this.inicio);
-        this.fim = entrada.nextInt();
+        int aux_v=0;
+        do{
+            System.out.printf("Defina o vértice de Início entre 0 e %d: ", this.n);
+            aux_v = entrada.nextInt();
+        }while(aux_v<0 || aux_v>=this.n);
+        this.inicio = aux_v;
+        do{
+            System.out.printf("Defina o vértice de Fim entre 0 e %d (Diferente do Início em %d): ", this.n, this.inicio);
+            aux_v = entrada.nextInt();
+        }while(((aux_v<0) || (aux_v>=this.n))&&(aux_v!=this.inicio));
         entrada.close();
-        System.out.println("Início: " + this.inicio + "| Fim: "+ this.fim);
+        System.out.println("Início: " + (this.inicio) + "| Fim: "+ (this.fim));
 
     }
 }

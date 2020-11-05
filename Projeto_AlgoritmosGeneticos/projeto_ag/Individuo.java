@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class Individuo {
 
-    double infinito = 999999999.90;// variavel definindo infinito
+    double infinito = Double.POSITIVE_INFINITY;// variavel definindo infinito
 
     private int[] genotipo; // Vetor Decimal onde as posicoes representam a ordem e os valores (1 a n) representam os vértices (0 = nao visitado)
 
@@ -62,4 +62,5 @@ public class Individuo {
                     this.genotipo[this.genotipo.length-1] = g.getFim();
             }
         }
+    }
 }
