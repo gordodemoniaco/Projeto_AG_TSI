@@ -2,7 +2,6 @@ package projeto_ag;
 
 import java.util.Random;
 
-
 /**
  * Um indivíduo que representa um estado final do caminho percorrido.
  *
@@ -10,14 +9,26 @@ import java.util.Random;
  */
 public class Individuo {
 
-    double infinito = Double.POSITIVE_INFINITY;// variavel definindo infinito
+    private double infinito = Double.POSITIVE_INFINITY;// variavel definindo infinito
+    private static double aptidaoMax = 99999.99;
 
-    private int[] genotipo; // Vetor Decimal onde as posicoes representam a ordem e os valores (1 a n) representam os vértices (0 = nao visitado)
+    private int nome;
 
-    private double aptidao=infinito; // Valor somado do caminho final (quanto menor, melhor)
+    private int[] genotipo; // Vetor Decimal onde as posicoes representam a ordem e os valores (1 a n)
+                            // representam os vértices (0 = nao visitado)
+
+    private double aptidao = infinito; // Valor somado do caminho final (quanto menor, melhor)
 
     public int[] getGenotipo() { // método que retorna o genotipo (vetor decimal)
         return genotipo;
+    }
+
+    public int getNome() {
+        return nome;
+    }
+
+    public void setNome(int nome) {
+        this.nome = nome;
     }
 
     public double getAptidao() { // metodo que retorna a aptidao
@@ -27,8 +38,8 @@ public class Individuo {
     public void setAptidao(Grafo g) { // metodo que atualiza a aptidao do individuo
         double aux = 0;
         for(int i=1; i<this.genotipo.length; i++){
-            if(g.getDist(i-1, i)>=infinito){
-                aux = infinito; // infinito constante como valor máximo
+            if(g.getDist(i-1, i)>=(infinito-1)){
+                aux = aptidaoMax; // infinito constante como valor máximo
                 break;
             } 
             aux += g.getDist(i-1, i);   // somatorio das arestas do caminho
