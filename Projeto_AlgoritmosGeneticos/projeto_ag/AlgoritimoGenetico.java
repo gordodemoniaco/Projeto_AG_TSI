@@ -10,9 +10,8 @@ public class AlgoritimoGenetico {
     private int elitismo;   // quantudade de individuos eleitos por elitismo
     private boolean selecao; // true = roleta | false = torneio
     private Grafo grafo;    // Grafo que será passado por parâmetro
-    private Individuo[][] individuos; // Vetor de indivíduos
 
-    AlgoritimoGenetico(int populacao, int geracoes, double mutacao, int elitismo, boolean selecao, Grafo grafo){
+    AlgoritimoGenetico(int populacao, int geracoes, double mutacao, int elitismo, boolean selecao, Grafo grafo, int corte){
         this.populacao = populacao;
         this.geracoes = geracoes;
         this.elitismo = elitismo;

@@ -141,4 +141,27 @@ public class Grafo {
         System.out.println("Início: " + (this.inicio) + "| Fim: "+ (this.fim));
 
     }
+    public String printSelecao(boolean selecao){
+        if(selecao){
+            return "Roleta";
+        }
+        return "Torneio";
+    }
+    public int posicaoCorte(){
+        Scanner entrada = new Scanner(System.in);
+        int aux;
+        boolean verify=true;
+        do{
+            System.out.println("Escolha a posiçao de corte entre as " + this.n + " posições.(Exceto Início="+this.getInicio()+" e Fim="+this.getFim()+":");
+            aux = entrada.nextInt();
+            if((aux==this.getFim()||aux==this.getInicio())||(aux>=this.n)||(aux<0))
+                verify=true;
+            else
+                verify = false;
+        }while(verify);
+        aux = entrada.nextInt();
+        entrada.close();
+        return aux;
+
+    }
 }
