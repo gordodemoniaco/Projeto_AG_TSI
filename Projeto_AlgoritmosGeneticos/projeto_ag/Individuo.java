@@ -57,7 +57,8 @@ public class Individuo {
     public void geraGenotipoAleatorio(Grafo g){
         Random r = new Random(); // gerador de numeros aleatórios
         this.genotipo[0] = g.getInicio(); // definindo o vertice de inicio
-
+        startGenotipo(g);
+        setAptidao(g);
         for(int i=1; i<this.genotipo.length; i++){
             int aux;
             int anterior = this.genotipo[i-1]; // condicao de nao repeticao seguida de vertices iguais
@@ -74,5 +75,19 @@ public class Individuo {
             }
         }
     }
-    
+    public void startGenotipo(Grafo g){
+        for(int i=1; i<this.genotipo.length; i++){
+            this.genotipo[i] = g.getFim();
+        }
+    }
+    public int tamanhoIndividuo(Grafo g){
+        int aux=0;
+        for(int i=0; i<this.genotipo.length; i++){
+            aux++;
+            if(this.genotipo[i]==g.getFim())
+                break;
+            
+        }
+        return aux;
+    }
 }
