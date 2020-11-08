@@ -1,5 +1,6 @@
 package projeto_ag;
 
+import java.util.Comparator;
 import java.util.Random;
 
 /**
@@ -11,7 +12,7 @@ public class Individuo {
 
     private double infinito = Double.POSITIVE_INFINITY;// variavel definindo infinito
     private static double aptidaoMax = 99999.99;
-
+    private Grafo g;
     private int nome;
 
     private int[] genotipo; // Vetor Decimal onde as posicoes representam a ordem e os valores (1 a n)
@@ -32,6 +33,7 @@ public class Individuo {
     }
 
     public double getAptidao() { // metodo que retorna a aptidao
+        this.setAptidao(g);
         return this.aptidao;
     }
 
@@ -52,6 +54,7 @@ public class Individuo {
     }
     Individuo (Grafo g){    // construtor de indivíduo
         this.genotipo = new int[g.n];
+        this.g = g;
     }
 
     public void geraGenotipoAleatorio(Grafo g){
@@ -90,4 +93,16 @@ public class Individuo {
         }
         return aux;
     }
+}
+class Compara implements Comparator<Individuo>{
+
+    @Override
+    public int compare(Individuo o1, Individuo o2) {
+        if(o1.getAptidao()>o2.getAptidao())
+            return 1;
+        if(o1.getAptidao()<o2.getAptidao())
+            return -1;
+        return 0;
+    }
+    
 }
