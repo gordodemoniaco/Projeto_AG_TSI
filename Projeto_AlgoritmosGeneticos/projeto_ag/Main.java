@@ -10,12 +10,12 @@ package projeto_ag;
 
 public class Main {
     public static void main(String[] args) {
-        final int geracoes = 50; // número de gerações
-        int populacao=100; // tamanho da populacao
-        double mutacao = 0.1; // (0 (0%) a 1(100%))
+        final int geracoes = 10; // número de gerações
+        int populacao=100000; // tamanho da populacao
+        double mutacao = 0.05; // (0 (0%) a 1(100%))
         boolean selecao = false; // true=roleta | false=torneio
-        int combatentes = 10; // numero de combatentes
-        int elitismo = 50; // numero de individuos para eleitismo
+        int combatentes = 5; // numero de combatentes
+        int elitismo = 10; // numero de individuos para eleitismo
 
         Grafo grafo; // instancia do grafo
         int ponta_inicio = 0;
