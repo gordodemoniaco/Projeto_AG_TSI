@@ -41,7 +41,7 @@ public class Individuo{
         for(i=1; i<(g.n); i++){
             aux = aux + g.getDist(p.genotipo[i-1], p.genotipo[i]);
         }
-        if(p.genotipo[i]!=g.getFim())
+        if(p.genotipo[i-1]!=g.getFim())
             aux = aux + 100000;
         this.aptidao = aux;
     }
@@ -67,7 +67,8 @@ public class Individuo{
     public void geraGenotipoAleatorio(Grafo g, Individuo p){
         Random r = new Random(); // gerador de numeros aleatórios
         int aleatorio;
-        for(int i=0; i<(g.n); i++){
+        this.startGenotipo(g);
+        for(int i=1; i<(g.n); i++){
             aleatorio = r.nextInt(g.n);
             p.genotipo[i] = aleatorio;
         }

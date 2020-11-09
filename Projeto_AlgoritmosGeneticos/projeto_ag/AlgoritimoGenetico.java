@@ -107,7 +107,6 @@ public class AlgoritimoGenetico {
             aux.setNome(contador_nomes);
             aux.geraGenotipoAleatorio(this.grafo, aux);
             aux.setAptidao(this.grafo, aux);
-            System.out.println(aux.getAptidao());
             originais.add(aux);
         }
         Collections.sort(originais, new Comparador());
@@ -126,7 +125,7 @@ public class AlgoritimoGenetico {
         return (this.mutacao<=sorteio);
     }
     public Individuo executaMutacao(Individuo p, Grafo g){
-        int tamanho = p.tamanhoIndividuo(g);
+        int tamanho = p.getGenotipo().length;
         Individuo f = p;
         if(tamanho == 2){
             return f;
