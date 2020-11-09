@@ -103,7 +103,7 @@ public class Grafo {
         }
     }
     public double getDist(int v1, int v2){
-        System.out.println(this.dist[v1][v2]);
+        //System.out.println(this.dist[v1][v2]);
         return this.dist[v1][v2];
     }
     public void setInicioFim(int inicio, int fim){
