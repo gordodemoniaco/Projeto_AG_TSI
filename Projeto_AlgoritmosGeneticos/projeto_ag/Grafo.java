@@ -1,6 +1,5 @@
 package projeto_ag;
 
-import java.util.Scanner;
 import java.util.Random;
 
 public class Grafo {
@@ -13,70 +12,7 @@ public class Grafo {
     double [][] dist; // matriz de adjascencia
     private int inicio; // vértice inicial
     private int fim; // vertice final
-    /*
-    Grafo(int tamanho, int aleatorio){ //Grafo mutável (aleatorio = true, montável = false, tamanho = numero de vértices) NÃO UTILIZADO
-        this.n = tamanho;
-        this.dist = new double[this.n][this.n];
-        boolean aop = true;
-        switch(aleatorio){
-            case 0:
-                aop = false;
-            break;
-            case 1: 
-                aop = true;
-            break;
-            default:
-                aop = false;
-            break;
-        }
-            
-
-        if(!aop){ // Se a opçao for não aleatório
-            System.out.println("Distância entre os Vértices. Se não houver arestas entre os vertices, a distancia digitada deverá ser 0 (será substituida por infinito).");
-            Scanner entrada = new Scanner (System.in);
-            for(int i=0; i<this.n; i++){
-                for(int j=i; j<this.n; j++){
-                    if(i==j){
-                        double num = 0.0; // Distancia pra vertice no mesmo ponto, ou seja, 0
-                        this.dist[i][j] = num;
-                    }
-                    else{
-                        System.out.println("Distância entre "+ (i+1) + " e "+ (j+1) +": ");
-                        double num = entrada.nextDouble();
-                        if (num == 0.0){
-                            num = this.infinito; // se a distancia for deixada como zero pelo usuário, será considerada sem aresta (explicado)
-                        }
-                        this.dist[i][j] = num;
-                        this.dist[j][i] = num;
-                    }
-                }
-            }
-            entrada.close();
-        }
-        else {
-            for(int i=0; i<this.n; i++){
-                for(int j=1; j<this.n; j++){
-                    if(i!=j){
-                        Random r = new Random();
-                        double num = r.nextInt(100);
-                        if (num == 0.0){
-                            num = this.infinito;
-                        }
-                        this.dist[i][j] = num;
-                        this.dist[j][i] = num;
-                    }
-                    else if(i==j){
-                        double num = 0.0;
-                        this.dist[i][j] = num;
-                    }
-                    
-                }
-            }
-
-        }
-        
-    }
-    */
+    
     Grafo(int op){ // Grafo padrão pra testes
         
         double [] num1, num2, num3, num4, num5, num6, num7, num8, num9, num10;

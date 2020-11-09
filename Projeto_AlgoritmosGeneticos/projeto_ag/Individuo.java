@@ -93,6 +93,10 @@ public class Individuo {
         }
         return aux;
     }
+    public void printaIndividuo(){
+        System.out.println("Nome: "+getNome());
+        System.out.println("Aptidão: "+getAptidao());
+    }
 }
 class Compara implements Comparator<Individuo>{
 

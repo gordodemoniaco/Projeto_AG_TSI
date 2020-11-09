@@ -1,6 +1,5 @@
 package projeto_ag;
 
-import java.util.Scanner;
 
 /**
  * Método Principal do Projeto de Algorítmos Genéticos
@@ -14,11 +13,13 @@ public class Main {
         final int geracoes = 20; // número de gerações
         int populacao=1000; // tamanho da populacao
         double mutacao = 0.05; // (0 (0%) a 1(100%))
-        boolean selecao = false; // true=roleta | false=torneio 
+        boolean selecao = false; // true=roleta | false=torneio
+        int combatentes = 3; // numero de combatentes
         int elitismo = 10; // numero de individuos para eleitismo
-        int corte = 3;  // posicao de corte do crossover padrao ([2])
-        
-        Grafo g; // instancia do grafo
+        int corte;  // posicao de corte do crossover padrao ([2])
+
+        Grafo grafo; // instancia do grafo
+        AlgoritimoGenetico a;
         
         System.out.println("Projeto Algorítmos Genéticos");
         System.out.println("");
@@ -31,7 +32,7 @@ public class Main {
         System.out.println("Taxa de Mutação: "+ mutacao);
         System.out.println("Método de Seleção: "+ g.printSelecao(selecao));
         corte = g.posicaoCorte();
-        //a = new AlgoritimoGenetico(populacao, geracoes, mutacao, elitismo, selecao, g, corte);
+        a = new AlgoritimoGenetico(populacao, geracoes, mutacao, elitismo, selecao, combatentes, grafo, corte);
     }
 }
 
