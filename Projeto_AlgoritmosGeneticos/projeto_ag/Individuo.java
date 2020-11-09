@@ -11,7 +11,6 @@ import java.util.Random;
 public class Individuo {
 
     private double infinito = Double.POSITIVE_INFINITY;// variavel definindo infinito
-    private static double aptidaoMax = 99999.99;
     private Grafo g;
     private int nome;
 
@@ -38,7 +37,7 @@ public class Individuo {
 
     public void setAptidao(Grafo g) { // metodo que atualiza a aptidao do individuo
         double aux = 0;
-        for(int i=1; i<this.genotipo.length; i++){
+        for(int i=1; i<g.n; i++){
             aux = aux + g.getDist(this.genotipo[i-1], this.genotipo[i]);
         }
         this.aptidao = aux;
