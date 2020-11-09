@@ -38,7 +38,7 @@ public class AlgoritimoGenetico {
     public void geraNovaPopulacao(){
         contador_geracao++;
         ArrayList<Individuo> nova = new ArrayList<>();
-        ordenaPopulacao(originais);
+        
         //elitismo
         for(int i=0; i<elitismo; i++){
             nova.add(originais.get(i));
@@ -72,6 +72,8 @@ public class AlgoritimoGenetico {
 
         }while (nova.size()<originais.size());
         originais = nova;
+        ordenaPopulacao(originais);
+        printaResultado(originais);
         
     }
     public Individuo torneio(int qtd){
@@ -101,6 +103,7 @@ public class AlgoritimoGenetico {
             originais.add(aux);
         }
         ordenaPopulacao(originais);
+        printaResultado(originais);
 
     }
     public void printaResultado(ArrayList<Individuo> p){

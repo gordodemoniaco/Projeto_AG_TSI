@@ -18,7 +18,7 @@ public class Individuo {
     private int[] genotipo; // Vetor Decimal onde as posicoes representam a ordem e os valores (1 a n)
                             // representam os vértices (0 = nao visitado)
 
-    private double aptidao = infinito; // Valor somado do caminho final (quanto menor, melhor)
+    private double aptidao; // Valor somado do caminho final (quanto menor, melhor)
 
     public int[] getGenotipo() { // método que retorna o genotipo (vetor decimal)
         return genotipo;
@@ -40,7 +40,7 @@ public class Individuo {
     public void setAptidao(Grafo g) { // metodo que atualiza a aptidao do individuo
         double aux = 0;
         for(int i=1; i<this.genotipo.length; i++){
-            if(this.g.getDist((i-1), i)>=(infinito-1)){
+            if((this.g.getDist((i-1), i))>=(infinito-1)){
                 aux = aptidaoMax; // infinito constante como valor máximo
                 break;
             } 
@@ -57,6 +57,7 @@ public class Individuo {
     }
     Individuo (Grafo g, Individuo pai, Individuo mae, int corte, int nome){
         this.genotipo = new int[pai.genotipo.length];
+        this.g = g;
         setNome(nome);
         int i;
         for(i=0; i<corte; i++)
@@ -70,7 +71,7 @@ public class Individuo {
         this.genotipo[0] = g.getInicio(); // definindo o vertice de inicio
         startGenotipo(g);
         setAptidao(g);
-        for(int i=1; i<this.genotipo.length; i++){
+        for(int i=1; i<this.tamanhoIndividuo(g); i++){
             int aux;
             int anterior = this.genotipo[i-1]; // condicao de nao repeticao seguida de vertices iguais
             do{ // verificando o valor do vertice
@@ -110,9 +111,9 @@ class Compara implements Comparator<Individuo>{
 
     @Override
     public int compare(Individuo o1, Individuo o2) {
-        if(o1.getAptidao()>o2.getAptidao())
-            return 1;
         if(o1.getAptidao()<o2.getAptidao())
+            return 1;
+        if(o1.getAptidao()>o2.getAptidao())
             return -1;
         return 0;
     }
