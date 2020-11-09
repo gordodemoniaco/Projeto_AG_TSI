@@ -33,18 +33,13 @@ public class Individuo {
     }
 
     public double getAptidao() { // metodo que retorna a aptidao
-        this.setAptidao(this.g);
         return this.aptidao;
     }
 
     public void setAptidao(Grafo g) { // metodo que atualiza a aptidao do individuo
         double aux = 0;
         for(int i=1; i<this.genotipo.length; i++){
-            if((this.g.getDist((i-1), i))>=(infinito-1)){
-                aux = aptidaoMax; // infinito constante como valor máximo
-                break;
-            } 
-            aux += this.g.getDist(i-1, i);   // somatorio das arestas do caminho
+            aux = aux + g.getDist(this.genotipo[i-1], this.genotipo[i]);
         }
         this.aptidao = aux;
     }
@@ -111,11 +106,10 @@ class Compara implements Comparator<Individuo>{
 
     @Override
     public int compare(Individuo o1, Individuo o2) {
-        if(o1.getAptidao()<o2.getAptidao())
-            return 1;
-        if(o1.getAptidao()>o2.getAptidao())
+        if(o1.getAptidao()>=o2.getAptidao())
             return -1;
-        return 0;
+        else
+            return 1;
     }
     
 }
