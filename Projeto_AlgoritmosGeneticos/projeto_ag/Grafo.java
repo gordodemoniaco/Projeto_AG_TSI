@@ -12,7 +12,7 @@ public class Grafo {
     double [][] dist; // matriz de adjascencia
     private int inicio; // vértice inicial
     private int fim; // vertice final
-    
+
     Grafo(int op){ // Grafo padrão pra testes
         
         double [] num1, num2, num3, num4, num5, num6, num7, num8, num9, num10;
@@ -142,26 +142,18 @@ public class Grafo {
         }
         return "Torneio";
     }
-    public int posicaoCorte(){
+    public int posicaoCorte(boolean op){
         int aux;
-        int op;
-        op = 2; // opcao da posição de corte (1 aleatória, 2 n/2)
-        if(op==1){
+        if(op){
             Random gerador = new Random();
             int temp;
             do{
                 temp = gerador.nextInt(this.n);
             }while((temp== 0 )|| (temp == (this.n-1)));
             aux=temp;
-            System.out.println("Posição de Corte Aleatória: "+aux);
-        }
-        if(op==2){
-            aux = (this.n)/2;
-            System.out.println("Posição de Corte: "+aux);
         }
         else{
             aux = (this.n)/2;
-            System.out.println("Posição de Corte: "+aux);
         }
         return aux;
     }

@@ -11,14 +11,13 @@ public class AlgoritimoGenetico {
     private int elitismo;   // quantudade de individuos eleitos por elitismo
     private boolean selecao; // true = roleta | false = torneio
     private Grafo grafo;    // Grafo que será passado por parâmetro
-    private ArrayList<String> nomes_escolhidos = new ArrayList<>();
     private ArrayList<Individuo> originais = new ArrayList<>();
     private int contador_nomes;
     private int contador_geracao=0;
     private static int multipli = 10000;
     private int combatentes;
 
-    AlgoritimoGenetico(int populacao, int geracoes, double mutacao, int elitismo, boolean selecao, int combatentes, Grafo grafo, int corte){
+    AlgoritimoGenetico(int populacao, int geracoes, double mutacao, int elitismo, boolean selecao, int combatentes, Grafo grafo){
         this.populacao = populacao;
         this.geracoes = geracoes;
         this.elitismo = elitismo;
@@ -31,7 +30,10 @@ public class AlgoritimoGenetico {
 
     }
     public void executar(){
-
+        geraPopulacaoInicial();
+        for(int i=1; i<=geracoes; i++){
+            geraNovaPopulacao();
+        }
     }
     public void geraNovaPopulacao(){
         contador_geracao++;
@@ -50,25 +52,39 @@ public class AlgoritimoGenetico {
                 pai = roleta();
                 mae = roleta();
             } else {
-                pai = torneio();
-                mae = torneio();
+                pai = torneio(combatentes);
+                mae = torneio(combatentes);
             }
+            //corteCrossover
+            Random r  = new Random();
+            int corte = grafo.posicaoCorte(r.nextBoolean());
+            Individuo filho1 = new Individuo(grafo, pai, mae, corte, ++contador_nomes);
+            boolean teste = calculaMutacao();
+            if(teste)
+                executaMutacao(filho1, grafo);
+            nova.add(filho1);
+            Individuo filho2 = new Individuo(grafo, pai, mae, corte, ++contador_nomes);
+            teste = calculaMutacao();
+            if(teste)
+                executaMutacao(filho2, grafo);
+            nova.add(filho2);
+
 
         }while (nova.size()<originais.size());
-        //corteCrossover
-
+        originais = nova;
         
-
-
     }
     public Individuo torneio(int qtd){
         Random r = new Random();
-        int aux[] = r.nextInt(originais.size());
+        int aux[] = new int[qtd];
+        int ganhador=r.nextInt(originais.size());
+        for(int i=1; i<qtd; i++){
+            aux[i] = r.nextInt(originais.size());
+            if(originais.get(aux[i]).getAptidao()>=originais.get(ganhador).getAptidao())
+                ganhador = aux[i];
 
-        if(originais.get(i).getAptidao()>originais.get(j).getAptidao())
-            return originais.get(i);
-        else
-            return originais.get(j);
+        }
+        return originais.get(ganhador);
     }
     public Individuo roleta(){
         Random r = new Random();
@@ -85,6 +101,12 @@ public class AlgoritimoGenetico {
             originais.add(aux);
         }
         ordenaPopulacao(originais);
+
+    }
+    public void printaResultado(ArrayList<Individuo> p){
+        System.out.println("Geração "+contador_geracao);
+        System.out.println("Indivíduo Mais apto: ");
+        p.get(0).printaIndividuo();
     }
     public void ordenaPopulacao(ArrayList<Individuo> p){
         Collections.sort(p, new Compara()); 

@@ -16,7 +16,6 @@ public class Main {
         boolean selecao = false; // true=roleta | false=torneio
         int combatentes = 3; // numero de combatentes
         int elitismo = 10; // numero de individuos para eleitismo
-        int corte;  // posicao de corte do crossover padrao ([2])
 
         Grafo grafo; // instancia do grafo
         AlgoritimoGenetico a; // instancia do algoritmo
@@ -31,8 +30,8 @@ public class Main {
         System.out.println("Membros de Elite: "+ elitismo);
         System.out.println("Taxa de Mutação: "+ mutacao);
         System.out.println("Método de Seleção: "+ grafo.printSelecao(selecao));
-        corte = grafo.posicaoCorte();
-        a = new AlgoritimoGenetico(populacao, geracoes, mutacao, elitismo, selecao, combatentes, grafo, corte);
+        a = new AlgoritimoGenetico(populacao, geracoes, mutacao, elitismo, selecao, combatentes, grafo);
+        a.executar();
     }
 }
 

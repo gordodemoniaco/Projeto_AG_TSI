@@ -40,15 +40,14 @@ public class Individuo {
     public void setAptidao(Grafo g) { // metodo que atualiza a aptidao do individuo
         double aux = 0;
         for(int i=1; i<this.genotipo.length; i++){
-            if(g.getDist(i-1, i)>=(infinito-1)){
+            if(this.g.getDist(i-1, i)>=(infinito-1)){
                 aux = aptidaoMax; // infinito constante como valor máximo
                 break;
             } 
-            aux += g.getDist(i-1, i);   // somatorio das arestas do caminho
+            aux += this.g.getDist(i-1, i);   // somatorio das arestas do caminho
         }
         this.aptidao = aux;
     }
-
     public void setGenotipo(int[] genotipo) { // metodo que atualiza o genótipo quando necessário
         this.genotipo = genotipo; 
     }
@@ -56,7 +55,16 @@ public class Individuo {
         this.genotipo = new int[g.n];
         this.g = g;
     }
-
+    Individuo (Grafo g, Individuo pai, Individuo mae, int corte, int nome){
+        this.genotipo = new int[pai.genotipo.length];
+        setNome(nome);
+        int i;
+        for(i=0; i<corte; i++)
+            this.genotipo[i] = pai.genotipo[i];
+        for(i=corte; i<pai.genotipo.length; i++)
+            this.genotipo[i] = mae.genotipo[i];
+        this.setAptidao(g);
+    }
     public void geraGenotipoAleatorio(Grafo g){
         Random r = new Random(); // gerador de numeros aleatórios
         this.genotipo[0] = g.getInicio(); // definindo o vertice de inicio
@@ -94,9 +102,9 @@ public class Individuo {
         return aux;
     }
     public void printaIndividuo(){
-        System.out.println("Nome: "+getNome());
-        System.out.println("Aptidão: "+getAptidao());
+        System.out.println("Nome: "+getNome()+" | Aptidão: "+getAptidao());
     }
+    
 }
 class Compara implements Comparator<Individuo>{
 
