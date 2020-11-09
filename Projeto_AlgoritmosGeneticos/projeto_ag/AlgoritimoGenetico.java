@@ -38,11 +38,13 @@ public class AlgoritimoGenetico {
     public void geraNovaPopulacao(){
         contador_geracao++;
         ArrayList<Individuo> nova = new ArrayList<>();
-        
         //elitismo
-        for(int i=0; i<elitismo; i++){
-            nova.add(originais.get(i));
+        if(elitismo > 0){
+            for(int i=0; i<elitismo; i++){
+                nova.add(originais.get(i));
+            }
         }
+        
         do{
             Individuo pai;
             Individuo mae;
@@ -59,21 +61,26 @@ public class AlgoritimoGenetico {
             Random r  = new Random();
             int corte = grafo.posicaoCorte(r.nextBoolean());
             Individuo filho1 = new Individuo(grafo, pai, mae, corte, ++contador_nomes);
-            boolean teste = calculaMutacao();
-            if(teste)
+            if(calculaMutacao())
                 executaMutacao(filho1, grafo);
             nova.add(filho1);
             Individuo filho2 = new Individuo(grafo, pai, mae, corte, ++contador_nomes);
-            teste = calculaMutacao();
-            if(teste)
+            if(calculaMutacao())
                 executaMutacao(filho2, grafo);
             nova.add(filho2);
 
 
         }while (nova.size()<originais.size());
+        Collections.sort(nova, new Comparador());
+        /*
+        for(int k=0; k<nova.size(); k++){
+            originais.add(nova.get(k));
+        }*/
+
+        System.out.println("Geração "+contador_geracao);
+        System.out.println("Indivíduo Mais apto: ");
+        nova.get(0).printaIndividuo();
         originais = nova;
-        ordenaPopulacao(originais);
-        printaResultado(originais);
         
     }
     public Individuo torneio(int qtd){
@@ -97,23 +104,22 @@ public class AlgoritimoGenetico {
     public void geraPopulacaoInicial(){
         for(contador_nomes=0; contador_nomes<this.populacao; contador_nomes++){
             Individuo aux = new Individuo(this.grafo);
-            aux.geraGenotipoAleatorio(this.grafo);
             aux.setNome(contador_nomes);
-            aux.setAptidao(this.grafo);
+            aux.geraGenotipoAleatorio(this.grafo, aux);
+            aux.setAptidao(this.grafo, aux);
+            System.out.println(aux.getAptidao());
             originais.add(aux);
         }
-        ordenaPopulacao(originais);
-        printaResultado(originais);
+        Collections.sort(originais, new Comparador());
+        System.out.println("Geração "+contador_geracao);
+        System.out.println("Indivíduo Mais apto: ");
+        originais.get(0).printaIndividuo();
 
     }
     public void printaResultado(ArrayList<Individuo> p){
-        System.out.println("Geração "+contador_geracao);
-        System.out.println("Indivíduo Mais apto: ");
-        p.get(0).printaIndividuo();
+        
     }
-    public void ordenaPopulacao(ArrayList<Individuo> p){
-        Collections.sort(p, new Compara()); 
-    }
+    
     public boolean calculaMutacao(){
         Random r = new Random();
         int sorteio = r.nextInt(multipli);

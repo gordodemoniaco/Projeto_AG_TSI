@@ -1,6 +1,5 @@
 package projeto_ag;
 
-import java.util.Comparator;
 import java.util.Random;
 
 /**
@@ -8,16 +7,15 @@ import java.util.Random;
  *
  * @author Thomas Adam da Costa
  */
-public class Individuo {
+public class Individuo{
 
-    private double infinito = Double.POSITIVE_INFINITY;// variavel definindo infinito
     private Grafo g;
     private int nome;
 
     private int[] genotipo; // Vetor Decimal onde as posicoes representam a ordem e os valores (1 a n)
                             // representam os vértices (0 = nao visitado)
 
-    private double aptidao; // Valor somado do caminho final (quanto menor, melhor)
+    private int aptidao; // Valor somado do caminho final (quanto menor, melhor)
 
     public int[] getGenotipo() { // método que retorna o genotipo (vetor decimal)
         return genotipo;
@@ -31,15 +29,20 @@ public class Individuo {
         this.nome = nome;
     }
 
-    public double getAptidao() { // metodo que retorna a aptidao
+    public int getAptidao() { // metodo que retorna a aptidao
         return this.aptidao;
     }
 
-    public void setAptidao(Grafo g) { // metodo que atualiza a aptidao do individuo
-        double aux = 0;
-        for(int i=1; i<g.n; i++){
-            aux = aux + g.getDist(this.genotipo[i-1], this.genotipo[i]);
+    public void setAptidao(Grafo g, Individuo p) { // metodo que atualiza a aptidao do individuo
+        int aux = 0;
+        int i=0;
+        if(p.genotipo[0]!=g.getInicio())
+            aux = aux + 100000;
+        for(i=1; i<(g.n); i++){
+            aux = aux + g.getDist(p.genotipo[i-1], p.genotipo[i]);
         }
+        if(p.genotipo[i]!=g.getFim())
+            aux = aux + 100000;
         this.aptidao = aux;
     }
     public void setGenotipo(int[] genotipo) { // metodo que atualiza o genótipo quando necessário
@@ -48,40 +51,31 @@ public class Individuo {
     Individuo (Grafo g){    // construtor de indivíduo
         this.genotipo = new int[g.n];
         this.g = g;
+        this.startGenotipo(g);
     }
     Individuo (Grafo g, Individuo pai, Individuo mae, int corte, int nome){
-        this.genotipo = new int[pai.genotipo.length];
+        this.genotipo = new int[g.n];
         this.g = g;
         setNome(nome);
         int i;
         for(i=0; i<corte; i++)
             this.genotipo[i] = pai.genotipo[i];
-        for(i=corte; i<pai.genotipo.length; i++)
+        for(i=corte; i<this.g.n; i++)
             this.genotipo[i] = mae.genotipo[i];
-        this.setAptidao(g);
+        this.setAptidao(this.g, this);
     }
-    public void geraGenotipoAleatorio(Grafo g){
+    public void geraGenotipoAleatorio(Grafo g, Individuo p){
         Random r = new Random(); // gerador de numeros aleatórios
-        this.genotipo[0] = g.getInicio(); // definindo o vertice de inicio
-        startGenotipo(g);
-        setAptidao(g);
-        for(int i=1; i<this.tamanhoIndividuo(g); i++){
-            int aux;
-            int anterior = this.genotipo[i-1]; // condicao de nao repeticao seguida de vertices iguais
-            do{ // verificando o valor do vertice
-                aux = r.nextInt(this.genotipo.length+1);
-            }while((aux == g.getInicio()) || (aux == anterior));
-            this.genotipo[i] = aux;
-            if(aux == g.getFim()){ // se chegar ao vertice final, parar
-                break;
-            }
-            if(i==this.genotipo.length-1){ // garantindo que o ultimo laco chegue no final
-                if(this.genotipo[this.genotipo.length-1] != g.getFim())
-                    this.genotipo[this.genotipo.length-1] = g.getFim();
-            }
+        int aleatorio;
+        for(int i=0; i<(g.n); i++){
+            aleatorio = r.nextInt(g.n);
+            p.genotipo[i] = aleatorio;
         }
+        p.setAptidao(g, p);
     }
     public void startGenotipo(Grafo g){
+        this.genotipo = new int[g.n];
+        this.genotipo[0] = g.getInicio();
         for(int i=1; i<this.genotipo.length; i++){
             this.genotipo[i] = g.getFim();
         }
@@ -92,23 +86,10 @@ public class Individuo {
             aux++;
             if(this.genotipo[i]==g.getFim())
                 break;
-            
         }
         return aux;
     }
     public void printaIndividuo(){
         System.out.println("Nome: "+getNome()+" | Aptidão: "+getAptidao());
     }
-    
-}
-class Compara implements Comparator<Individuo>{
-
-    @Override
-    public int compare(Individuo o1, Individuo o2) {
-        if(o1.getAptidao()>=o2.getAptidao())
-            return -1;
-        else
-            return 1;
-    }
-    
 }
