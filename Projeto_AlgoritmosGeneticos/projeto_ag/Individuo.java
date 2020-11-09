@@ -33,14 +33,14 @@ public class Individuo {
     }
 
     public double getAptidao() { // metodo que retorna a aptidao
-        this.setAptidao(g);
+        this.setAptidao(this.g);
         return this.aptidao;
     }
 
     public void setAptidao(Grafo g) { // metodo que atualiza a aptidao do individuo
         double aux = 0;
         for(int i=1; i<this.genotipo.length; i++){
-            if(this.g.getDist(i-1, i)>=(infinito-1)){
+            if(this.g.getDist((i-1), i)>=(infinito-1)){
                 aux = aptidaoMax; // infinito constante como valor máximo
                 break;
             } 
